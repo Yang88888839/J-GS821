@@ -1,0 +1,13 @@
+flowchart TD
+    A["应用层\n业务逻辑与任务编排\n- 系统初始化\n- 工作任务\n- 状态控制\n- 事件处理"]
+    B["服务层\nBSP/功能服务封装\n- 按键/气体/阀门\n- 日志/存储/协议\n- 温度/模块/队列\n- 工厂参数管理"]
+    C["驱动层\nMCU外设驱动\n- GPIO/ADC\n- UART/LPUART\n- Timer/PWM\n- RTC/LPTIM\n- Flash/IWDT"]
+    D["硬件层\n实际硬件与外设\n- HC32L12x MCU\n- GPIO/ADC/定时器/串口\n- 传感器/按键/阀门\n- EEPROM/Flash等器件"]
+
+    A -->|调用服务接口| B
+    B -->|封装底层能力| C
+    C -->|控制/读写寄存器| D
+
+    A -.->|业务流程| B
+    B -.->|功能组合| C
+    C -.->|电气信号| D

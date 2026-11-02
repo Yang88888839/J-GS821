@@ -1,0 +1,49 @@
+flowchart TB
+    subgraph L1["应用层（对应项目功能特性）"]
+        direction TB
+        L1a["系统初始化与任务编排"]
+        L1b["气体采集与状态检测"]
+        L1c["按键事件处理（短按/长按/连击）"]
+        L1d["报警/故障处理（静音、测试、状态输出）"]
+        L1e["阀门动作与状态控制"]
+        L1f["LED/语音/显示反馈"]
+        L1g["参数保存与工厂校准"]
+        L1h["通信消息与模块上报"]
+    end
+
+    subgraph L2["服务层（模块化 BSP/功能服务）"]
+        direction TB
+        L2a["气体检测服务 bsp_gas"]
+        L2b["按键与输入服务 bsp_key"]
+        L2c["阀门控制服务 bsp_valve"]
+        L2d["日志与Flash事件服务 bsp_log"]
+        L2e["参数 EEPROM/工厂存储服务 bsp_eeprom + bsp_factory"]
+        L2f["通信协议与消息处理服务 bsp_module + bsp_protocol_fct"]
+        L2g["状态显示与声音服务 bsp_sound_led + bsp_temperature"]
+        L2h["队列/消息分发服务 bsp_queue"]
+    end
+
+    subgraph L3["驱动层（MCU 外设抽象）"]
+        direction TB
+        L3a["GPIO 驱动 driver_gpio"]
+        L3b["ADC 驱动 driver_adc"]
+        L3c["UART/LPUART 驱动 driver_uart + driver_lpuart"]
+        L3d["Timer/PWM 驱动 driver_timer + driver_pwm"]
+        L3e["RTC/LPTIM 驱动 driver_rtc + driver_lptim"]
+        L3f["Flash/IWDT 驱动 driver_flash + driver_iwdt"]
+    end
+
+    subgraph L4["硬件层（实际设备与外设）"]
+        direction TB
+        L4a["HC32L12x MCU"]
+        L4b["气体传感器/采样通道"]
+        L4c["按键输入接口"]
+        L4d["LED / 蜂鸣器 / 声音输出"]
+        L4e["阀门执行器 / 脉冲反馈"]
+        L4f["串口通信模块 / 外部设备"]
+        L4g["Flash/EEPROM 存储器"]
+    end
+
+    L1 --> L2
+    L2 --> L3
+    L3 --> L4
